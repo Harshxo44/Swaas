@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand -->
+    <color name="primary">#1565C0</color>
+    <color name="primary_dark">#0D47A1</color>
+    <color name="primary_light">#1E88E5</color>
+    <color name="accent">#00BCD4</color>
+
+    <!-- Background -->
+    <color name="background">#F5F7FA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#EEF2F7</color>
+
+    <!-- Text -->
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#5A6478</color>
+    <color name="text_hint">#9AA0B0</color>
+
+    <!-- Safety Colors -->
+    <color name="safe_green">#2E7D32</color>
+    <color name="safe_green_light">#E8F5E9</color>
+    <color name="moderate_yellow">#F57F17</color>
+    <color name="moderate_yellow_light">#FFF8E1</color>
+    <color name="unsafe_red">#C62828</color>
+    <color name="unsafe_red_light">#FFEBEE</color>
+
+    <!-- UI Elements -->
+    <color name="divider">#E0E6ED</color>
+    <color name="card_shadow">#1A000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Map Overlay -->
+    <color name="map_overlay">#80000000</color>
+</resources>

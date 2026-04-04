@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "309857754005",
+    "project_id": "swaas-9ae27",
+    "storage_bucket": "swaas-9ae27.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309857754005:android:8892d3bd813920e3a2749c",
+        "android_client_info": {
+          "package_name": "com.swaas.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOa7RD8ELP--gBd6ZKfwVxXW59pwHsEgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

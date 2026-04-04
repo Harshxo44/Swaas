@@ -1,0 +1,25 @@
+# Root .gitignore
+
+# Mac/Windows
+.DS_Store
+Thumbs.db
+
+# Android
+android/.gradle
+android/local.properties
+android/.idea/
+android/build/
+android/app/build/
+android/app/build.gradle.bak
+
+# Node.js Backend
+backend/node_modules/
+backend/dist/
+backend/coverage/
+backend/.env
+backend/serviceAccountKey.json
+backend/google-services.json
+
+# Local configurations
+*.iml
+.idea/

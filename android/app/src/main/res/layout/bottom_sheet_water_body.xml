@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="8dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Drag handle -->
+            <View
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:background="#CCCCCC"/>
+
+            <!-- Location Name -->
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"/>
+
+            <!-- Safety Level Badge -->
+            <TextView
+                android:id="@+id/tv_safety_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_rounded"
+                android:textColor="@color/white"/>
+
+            <!-- Safety Score Progress Bar -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_safety"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:trackCornerRadius="8dp"
+                app:trackThickness="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_safety_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:gravity="end"/>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginVertical="16dp" android:background="@color/divider"/>
+
+            <!-- Parameters -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Water Parameters" android:textSize="13sp"
+                android:textColor="@color/text_secondary" android:textAllCaps="true"
+                android:letterSpacing="0.08"/>
+
+            <TextView android:id="@+id/tv_ph"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" android:textSize="15sp" android:textColor="@color/text_primary"/>
+
+            <TextView android:id="@+id/tv_turbidity"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="6dp" android:textSize="15sp" android:textColor="@color/text_primary"/>
+
+            <TextView android:id="@+id/tv_tds"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="6dp" android:textSize="15sp" android:textColor="@color/text_primary"/>
+
+            <TextView android:id="@+id/tv_contaminants"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="6dp" android:textSize="15sp" android:textColor="@color/text_primary"/>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginVertical="16dp" android:background="@color/divider"/>
+
+            <!-- Precaution Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider">
+
+                <TextView
+                    android:id="@+id/tv_precaution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:lineSpacingMultiplier="1.4"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Last Updated -->
+            <TextView
+                android:id="@+id/tv_last_updated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textSize="11sp"
+                android:textColor="@color/text_hint"
+                android:gravity="end"/>
+
+        </LinearLayout>
+    </ScrollView>
+</com.google.android.material.card.MaterialCardView>
