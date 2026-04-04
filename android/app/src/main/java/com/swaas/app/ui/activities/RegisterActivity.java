@@ -59,10 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
         String email = binding.etEmail.getText().toString().trim();
         String password = binding.etPassword.getText().toString();
 
-        // Determine role from radio group
-        String role = binding.rbContributor.isChecked()
-                ? User.ROLE_CONTRIBUTOR
-                : User.ROLE_USER;
+        // Determine role (Enforced as normal user by default)
+        String role = User.ROLE_USER;
 
         boolean valid = true;
         if (!ValidationUtils.isRequired(name)) {

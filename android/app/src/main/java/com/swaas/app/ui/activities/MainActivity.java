@@ -63,17 +63,41 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new SearchFragment();
             } else if (id == R.id.nav_contribute) {
                 // Role check: only contributors can access this
-                authViewModel.currentUser.observe(this, user -> {
-                    if (user != null && user.isContributor()) {
-                        loadFragment(new AddWaterBodyFragment());
-                    } else {
-                        android.widget.Toast.makeText(this,
-                                "Access restricted to Data Contributors only.",
-                                android.widget.Toast.LENGTH_SHORT).show();
-                    }
-                });
-                return true;
+                com.swaas.app.model.User user = authViewModel.currentUser.getValue();
+                if (user != null && user.isContributor()) {
+                    fragment = new AddWaterBodyFragment();
+                } else {
+                    showContributorRequestDialog(user);
+                    return false;
+                }
             }
+    }
+
+    private void showContributorRequestDialog(com.swaas.app.model.User user) {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Contributor Access Required")
+            .setMessage("Adding and classifying water sources is restricted to authorized field testers to maintain data integrity.\n\nWould you like to apply for contributor status? An admin will review your request.")
+            .setPositiveButton("Request Approval", (dialog, which) -> {
+                if (user != null) {
+                    java.util.Map<String, Object> request = new java.util.HashMap<>();
+                    request.put("userId", user.getUserId());
+                    request.put("email", user.getEmail());
+                    request.put("name", user.getName());
+                    request.put("status", "pending");
+                    request.put("timestamp", com.google.firebase.firestore.FieldValue.serverTimestamp());
+                    
+                    com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                        .collection("contributor_requests").document(user.getUserId())
+                        .set(request)
+                        .addOnSuccessListener(unused -> 
+                            android.widget.Toast.makeText(this, "Access request securely sent to admins!", android.widget.Toast.LENGTH_LONG).show())
+                        .addOnFailureListener(e -> 
+                            android.widget.Toast.makeText(this, "Failed to send request", android.widget.Toast.LENGTH_SHORT).show());
+                }
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
+    }
             if (fragment != null) loadFragment(fragment);
             return true;
         });

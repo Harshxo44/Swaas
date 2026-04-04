@@ -94,7 +94,7 @@
                 android:imeOptions="actionDone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Role Selection -->
+        <!-- Role Selection (Hidden for security) -->
         <TextView
             android:id="@+id/tv_role_label"
             android:layout_width="wrap_content"
@@ -103,6 +103,7 @@
             android:text="Register as:"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_password"/>
 
@@ -112,27 +113,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_role_label">
-
-            <RadioButton
-                android:id="@+id/rb_user"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Normal User"
-                android:textColor="@color/text_primary"/>
-
-            <RadioButton
-                android:id="@+id/rb_contributor"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Contributor"
-                android:textColor="@color/text_primary"/>
-        </RadioGroup>
 
         <!-- Register Button -->
         <com.google.android.material.button.MaterialButton
