@@ -49,7 +49,10 @@ public class FirebaseAuthRepository {
                     firestore.collection(Constants.COLLECTION_USERS)
                             .document(uid)
                             .set(userMap)
-                            .addOnSuccessListener(unused -> onSuccess.accept(user))
+                            .addOnSuccessListener(unused -> {
+                                firebaseUser.sendEmailVerification(); // Send verification link
+                                onSuccess.accept(user);
+                            })
                             .addOnFailureListener(e -> onError.accept(e.getMessage()));
                 })
                 .addOnFailureListener(e -> onError.accept(e.getMessage()));
@@ -67,6 +70,13 @@ public class FirebaseAuthRepository {
                         onError.accept("Login failed.");
                         return;
                     }
+
+                    if (!firebaseUser.isEmailVerified()) {
+                        firebaseAuth.signOut();
+                        onError.accept("Email not verified! Please check your inbox for the verification link.");
+                        return;
+                    }
+
                     fetchUserProfile(firebaseUser.getUid(), onSuccess, onError);
                 })
                 .addOnFailureListener(e -> onError.accept(e.getMessage()));
@@ -85,7 +95,18 @@ public class FirebaseAuthRepository {
                         User user = doc.toObject(User.class);
                         onSuccess.accept(user);
                     } else {
-                        onError.accept("User profile not found.");
+                        // FIX: If a user exists in Auth but not Firestore (e.g. manually created), 
+                        // create a basic default profile for them instantly to prevent them from getting locked out.
+                        FirebaseUser fUser = firebaseAuth.getCurrentUser();
+                        if (fUser != null && fUser.getUid().equals(uid)) {
+                            User fallbackUser = new User(uid, "User", fUser.getEmail(), "user");
+                            firestore.collection(Constants.COLLECTION_USERS)
+                                    .document(uid).set(fallbackUser)
+                                    .addOnSuccessListener(unused -> onSuccess.accept(fallbackUser))
+                                    .addOnFailureListener(e -> onError.accept("Failed to build fallback profile"));
+                        } else {
+                            onError.accept("User profile not found.");
+                        }
                     }
                 })
                 .addOnFailureListener(e -> onError.accept(e.getMessage()));

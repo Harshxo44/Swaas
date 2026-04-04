@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         authViewModel.loadCurrentUser();
 
+        setSupportActionBar(binding.toolbar);
+
         requestLocationPermission();
         subscribeToFcmTopics();
         setupBottomNavigation();
@@ -110,5 +112,23 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.fragment_container, new MapFragment()).commit();
             }
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_logout) {
+            authViewModel.logout();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
