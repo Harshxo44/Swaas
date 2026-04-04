@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             }
+            if (fragment != null) loadFragment(fragment);
+            return true;
+        });
     }
 
     private void showContributorRequestDialog(com.swaas.app.model.User user) {
@@ -97,10 +100,6 @@ public class MainActivity extends AppCompatActivity {
             })
             .setNegativeButton("Cancel", null)
             .show();
-    }
-            if (fragment != null) loadFragment(fragment);
-            return true;
-        });
     }
 
     private void loadFragment(Fragment fragment) {
