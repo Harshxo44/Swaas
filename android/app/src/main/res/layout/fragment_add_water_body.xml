@@ -147,8 +147,17 @@
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="8dp"
             android:text="📍 Auto-fill from GPS"/>
+
+        <!-- Pick from Map Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pick_map"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="🗺️ Pick from Map"/>
 
         <!-- Progress Bar -->
         <ProgressBar

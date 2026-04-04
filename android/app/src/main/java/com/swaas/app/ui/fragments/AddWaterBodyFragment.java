@@ -51,6 +51,26 @@ public class AddWaterBodyFragment extends Fragment {
 
         binding.btnSubmit.setOnClickListener(v -> attemptSubmit());
         binding.btnUseGps.setOnClickListener(v -> fetchCurrentLocation());
+        binding.btnPickMap.setOnClickListener(v -> {
+            double startLat = currentLat != 0 ? currentLat : 20.5937;
+            double startLng = currentLng != 0 ? currentLng : 78.9629;
+            try {
+                if (!binding.etLatitude.getText().toString().isEmpty()) {
+                    startLat = Double.parseDouble(binding.etLatitude.getText().toString());
+                }
+                if (!binding.etLongitude.getText().toString().isEmpty()) {
+                    startLng = Double.parseDouble(binding.etLongitude.getText().toString());
+                }
+            } catch (Exception ignored) {}
+
+            MapPickerDialog dialog = MapPickerDialog.newInstance(startLat, startLng, (lat, lng) -> {
+                binding.etLatitude.setText(String.valueOf(lat));
+                binding.etLongitude.setText(String.valueOf(lng)); // Auto updates UI
+                currentLat = lat;
+                currentLng = lng;
+            });
+            dialog.show(getChildFragmentManager(), "MapPicker");
+        });
     }
 
     private void fetchCurrentLocation() {
