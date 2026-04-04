@@ -1,165 +1,108 @@
-# 💧 SWAAS — Safe Water Assessment and Awareness System
+<div align="center">
+  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Firebase-FFA611?style=for-the-badge&logo=firebase&logoColor=white" />
+  <img src="https://img.shields.io/badge/Room_DB-0081CB?style=for-the-badge&logo=sqlite&logoColor=white" />
+  <img src="https://img.shields.io/badge/OpenStreetMap-7EBC6F?style=for-the-badge&logo=openstreetmap&logoColor=white" />
+</div>
 
-A full-stack Android application that helps users identify the safety of nearby water bodies using real-time data collected by authorized field testers, powered by an AI-based safety scoring engine.
+<h1 align="center">💧 SWAAS: Safe Water Assessment & Awareness System</h1>
 
----
-
-## 🏗️ Project Structure
-
-```
-Swaas/
-├── android/                  ← Android Studio Project (Java, MVVM)
-│   └── app/src/main/
-│       ├── java/com/swaas/app/
-│       │   ├── model/        ← User, WaterBody, SafetyResult
-│       │   ├── db/           ← Room DB (offline cache)
-│       │   ├── network/      ← Retrofit API service
-│       │   ├── repository/   ← Firestore + Room + Retrofit data layer
-│       │   ├── viewmodel/    ← AuthViewModel, MapViewModel, ContributorViewModel
-│       │   ├── ui/
-│       │   │   ├── activities/  ← Splash, Login, Register, Main
-│       │   │   ├── fragments/   ← Map, Search, AddWaterBody, BottomSheet
-│       │   │   └── adapters/    ← WaterBodyAdapter (animated cards)
-│       │   └── utils/
-│       │       ├── WaterSafetyAnalyzer.java   ← AI scoring engine (WHO standards)
-│       │       ├── PrecautionHelper.java
-│       │       ├── MarkerColorHelper.java
-│       │       └── SwaasFirebaseMessagingService.java
-│       └── res/              ← Layouts, drawables, colors, themes
-└── backend/                  ← Node.js Express API
-    ├── server.js
-    ├── config/firebase.js
-    ├── middleware/authMiddleware.js
-    ├── routes/auth.js
-    ├── routes/waterbodies.js
-    └── controllers/waterBodyController.js
-```
+<p align="center">
+  <strong>A full-stack Android application that crowd-sources water quality data, ranks safety using an AI-assisted WHO-standard engine, and visually maps water bodies globally using OpenStreetMap.</strong>
+</p>
 
 ---
 
-## ⚡ Quick Start
+## ✨ Key Features
 
-### Step 1 — Firebase Setup (Required)
-
-1. Go to [Firebase Console](https://console.firebase.google.com)
-2. Create a new project named **SWAAS**
-3. Enable: **Authentication** (Email/Password), **Firestore**, **Storage**, **Cloud Messaging**
-4. **Android app**: Download `google-services.json` → replace `android/app/google-services.json`
-5. **Backend**: Download **Service Account Key** → save as `backend/serviceAccountKey.json`
-
-### Step 2 — Map Provider (OpenStreetMap — FREE ✅)
-
-This project uses **OSMdroid** backed by OpenStreetMap tiles. **No API key needed.**
-Tiles are loaded automatically over the internet (or cached locally for offline use).
+- 🗺️ **Live Global Map** — High-performance interactive map via OSMdroid (OpenStreetMap), completely free with no API limits.
+- 🧪 **AI Safety Analysis** — Built-in rules engine instantly ranks water as **Safe**, **Moderate**, or **Unsafe** based on WHO parameters (pH, Turbidity, TDS, Contaminants).
+- 📴 **Offline-First Architecture** — Powered by Android **Room DB**, users can view cached maps and previously searched water bodies even with no internet.
+- 🔐 **Role-Based Authentication** — Secure **Firebase JWT Auth**. Regular users can search and view water data, while authenticated *Contributors* can submit real-time water tests.
+- 🎨 **Material Design 3 UI** — Fluid, animated RecyclerViews, beautiful bottom sheet dialogs, and color-coded safety badges ensure a premium app feel.
+- 📡 **RESTful Backend** — A powerful, scalable **Node.js (Express)** microservice infrastructure connected to a NoSQL Firebase backend.
 
 ---
 
-### 🤖 Android App
+## 🏗️ Technology Stack
 
-1. Open **Android Studio** → `File > Open` → select `Swaas/android/`
-2. **Sync Gradle** (Android Studio will prompt automatically)
-3. Replace `app/google-services.json` with your real Firebase config
-4. Run on emulator or device (`Shift+F10`)
+### Mobile Frontend (Android / Java)
+- **Language**: Java 8
+- **Architecture**: MVVM (Model-View-ViewModel)
+- **Networking**: Retrofit2 & OkHttp3
+- **Local Database**: Room Persistence Library
+- **Maps**: OSMdroid (Free OpenStreetMap Tiles)
+- **UI/UX**: Material 3, ViewBinding, Glide
 
-> **Prerequisites**: JDK 17+, Android Studio Hedgehog or later, Android SDK 34
+### Backend Service (Node.js)
+- **Framework**: Express.js
+- **Database**: Firebase Firestore (NoSQL)
+- **Security**: Firebase Admin SDK, Helmet, custom JWT validation middleware
+- **Algorithms**: Custom water-safety heuristics engine matching frontend validation.
 
 ---
 
-### 🖥️ Node.js Backend
+## 🚀 Quick Start Guide
 
+### 1. Firebase Setup (Required)
+1. Navigate to the [Firebase Console](https://console.firebase.google.com).
+2. Create a new project `SWAAS`.
+3. Enable **Email/Password Authentication** and create a **Firestore Database** (Test Mode).
+4. **For Android**: Generate a `google-services.json` file and place it in the `android/app/` directory.
+5. **For Backend**: Generate a private Service Account Key JSON and place it in the `backend/` directory as `serviceAccountKey.json`.
+
+### 2. Running the Android Application
+1. Open **Android Studio**.
+2. Click **File > Open** and select specifically the `Swaas/android` folder.
+3. Allow Gradle to sync completely resulting in a `BUILD SUCCESSFUL` message.
+4. Hit **Run App** (`Shift+F10`) to deploy to a physical phone or an emulator.
+
+### 3. Running the Node.js API
 ```bash
+# Navigate to the backend directory
 cd Swaas/backend
 
-# Install dependencies
+# Install required node modules
 npm install
 
-# Configure environment
-cp .env.example .env
-# Edit .env with your Firebase Storage bucket
-
-# Place your Firebase service account key
-# Download from: Firebase Console → Project Settings → Service Accounts
-# Save as: backend/serviceAccountKey.json
-
-# Start development server
+# Start the local development server (with hot-reload)
 npm run dev
-
-# Start production server
-npm start
 ```
-
-Backend runs on: `http://localhost:3000`
-Health check: `http://localhost:3000/health`
+> *The backend server will run smoothly on `http://localhost:3000`.*
 
 ---
 
-## 📡 API Endpoints
+## 📡 API Endpoints Architecture
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/api/auth/register` | ❌ | Register new user |
-| `POST` | `/api/auth/login` | ❌ | Verify token & get profile |
-| `GET` | `/api/auth/profile` | ✅ | Get current user profile |
-| `GET` | `/api/waterbodies` | ✅ | Get all water bodies |
-| `GET` | `/api/waterbodies/nearby?lat=&lng=&radius=` | ✅ | Nearby water bodies |
-| `GET` | `/api/waterbodies/search?query=` | ✅ | Search by name |
-| `GET` | `/api/waterbodies/:id` | ✅ | Get single water body |
-| `POST` | `/api/waterbodies` | 🔒 Contributor | Add new water body |
-| `PUT` | `/api/waterbodies/:id` | 🔒 Contributor | Update water body |
-| `DELETE` | `/api/waterbodies/:id` | 🔒 Contributor | Delete water body |
-
-✅ = Authenticated user | 🔒 = Contributors only
+| Method | Route | Access | Purpose |
+|--------|-------|--------|---------|
+| `POST` | `/api/auth/register` | Open | Create new user account |
+| `POST` | `/api/auth/login` | Open | Verify credentials & issue scope |
+| `GET`  | `/api/waterbodies` | Protected | Fetch comprehensive water body index |
+| `GET`  | `/api/waterbodies/nearby` | Protected | Geo-spatial radius query |
+| `POST` | `/api/waterbodies` | **Contributor** | Submit fresh water quality reports |
+| `PUT`  | `/api/waterbodies/:id` | **Contributor** | Patch existing water quality metrics |
 
 ---
 
-## 🧠 AI Safety Scoring (WHO Standards)
+## 🧠 AI Safety Scoring Engine
 
-| Parameter | Weight | WHO Standard |
-|-----------|--------|-------------|
-| pH | 25% | 6.5 – 8.5 |
-| Turbidity | 30% | < 1 NTU ideal, max 5 NTU |
-| TDS | 25% | < 500 mg/L (max 1000 mg/L) |
-| Contaminants | 20% | Keyword-based detection |
+The scoring engine applies strict weighted analysis based on **World Health Organization (WHO)** cleanliness standards to produce an objective `SafetyScore` out of 100.
 
-| Score | Level | Color |
-|-------|-------|-------|
-| 80–100 | ✅ Safe | 🟢 Green |
-| 50–79 | ⚠️ Moderate | 🟡 Yellow |
-| 0–49 | 🚫 Unsafe | 🔴 Red |
+| Scientific Parameter | Weight | Acceptable WHO Range |
+|----------------------|--------|----------------------|
+| **pH Level** | 25% | `6.5` – `8.5` |
+| **Turbidity (NTU)** | 30% | `< 5.0 NTU` |
+| **TDS (mg/L)** | 25% | `< 500 mg/L` |
+| **Toxic Contaminants**| 20% | `0` detected hazards |
 
-> Identical scoring logic is implemented in both **Java** (`WaterSafetyAnalyzer.java`) and **Node.js** (`waterBodyController.js`) ensuring consistency.
+The final generated score triggers strict UI responses:
+- 🟢 **Safe (80–100):** Suitable for general use.
+- 🟡 **Moderate (50–79):** Requires active filtration or boiling before ingestion.
+- 🔴 **Unsafe (0–49):** Strictly flagged. Direct contact and usage strongly discouraged.
 
----
-
-## 🗃️ Firestore Schema
-
-**Collection: `users/{userId}`**
-```json
-{ "userId": "...", "name": "...", "email": "...", "role": "user|contributor" }
-```
-
-**Collection: `waterBodies/{id}`**
-```json
-{
-  "name": "River Ganga Point A",
-  "latitude": 25.3176, "longitude": 82.9739,
-  "ph": 7.2, "turbidity": 2.1, "tds": 320,
-  "contaminants": "",
-  "safetyScore": 87.5, "safetyLevel": "Safe",
-  "lastUpdated": "2026-04-04T10:30:00Z",
-  "contributorId": "uid_of_tester"
-}
-```
-
----
-
-## ✨ Features
-
-- 🗺️ **Live Map** — Google Maps with color-coded markers (Green/Yellow/Red)
-- 🧪 **AI Safety Analysis** — WHO-standard weighted scoring engine
-- 🔐 **Role-based Auth** — Firebase Authentication (User / Contributor)
-- 📲 **Push Notifications** — FCM alerts when water becomes unsafe
-- 📴 **Offline Mode** — Room DB caches last fetched data
-- 🔍 **Search & Filter** — By name, safety level, distance
-- ➕ **Contributor Module** — Add/update water bodies with GPS auto-fill
-- 🎨 **Smooth UI** — Animated card entrance, progress bars, safety color theming
+<p align="center">
+  <br>
+  <i>Developed with ❤️ by Aumaswar </i>
+</p>
