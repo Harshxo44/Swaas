@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Brand -->
-    <color name="primary">#1565C0</color>
-    <color name="primary_dark">#0D47A1</color>
-    <color name="primary_light">#1E88E5</color>
-    <color name="accent">#00BCD4</color>
+    <!-- Vibrant Modern Brand Palette -->
+    <color name="primary">#0F52BA</color>       <!-- Sapphire Blue -->
+    <color name="primary_dark">#022B69</color>  <!-- Deep Navy -->
+    <color name="primary_light">#4B8BF5</color> <!-- Soft Azure -->
+    <color name="accent">#00E5FF</color>        <!-- Electric Cyan -->
 
-    <!-- Background -->
-    <color name="background">#F5F7FA</color>
+    <!-- Deep Contrast Background -->
+    <color name="background">#F4F7FD</color>    <!-- Crisp cool white -->
     <color name="surface">#FFFFFF</color>
-    <color name="surface_variant">#EEF2F7</color>
+    <color name="surface_variant">#EAF0F9</color>
 
-    <!-- Text -->
-    <color name="text_primary">#1A1A2E</color>
-    <color name="text_secondary">#5A6478</color>
-    <color name="text_hint">#9AA0B0</color>
+    <!-- Sharp Text -->
+    <color name="text_primary">#0B132B</color>  <!-- Near Black Navy -->
+    <color name="text_secondary">#4D586F</color>
+    <color name="text_hint">#8A94A6</color>
 
-    <!-- Safety Colors -->
-    <color name="safe_green">#2E7D32</color>
-    <color name="safe_green_light">#E8F5E9</color>
-    <color name="moderate_yellow">#F57F17</color>
-    <color name="moderate_yellow_light">#FFF8E1</color>
-    <color name="unsafe_red">#C62828</color>
-    <color name="unsafe_red_light">#FFEBEE</color>
+    <!-- Vibrant Safety Badges -->
+    <color name="safe_green">#00B862</color>
+    <color name="safe_green_light">#E0F8EA</color>
+    <color name="moderate_yellow">#F89C0E</color>
+    <color name="moderate_yellow_light">#FFF3E0</color>
+    <color name="unsafe_red">#ED3833</color>
+    <color name="unsafe_red_light">#FDEAEA</color>
 
     <!-- UI Elements -->
-    <color name="divider">#E0E6ED</color>
-    <color name="card_shadow">#1A000000</color>
+    <color name="divider">#D7E1F3</color>
+    <color name="card_shadow">#12000000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
 
-    <!-- Map Overlay -->
-    <color name="map_overlay">#80000000</color>
+    <color name="map_overlay">#8000102A</color>
 </resources>
