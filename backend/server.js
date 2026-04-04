@@ -7,6 +7,7 @@ const rateLimit = require('express-rate-limit');
 
 const authRoutes = require('./routes/auth');
 const waterBodyRoutes = require('./routes/waterbodies');
+const analyzeRoutes = require('./routes/analyze');
 const { initFirebase } = require('./config/firebase');
 
 // ── Initialize Firebase Admin SDK ──────────────────────────────────────────
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 // ── Routes ─────────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
 app.use('/api/waterbodies', waterBodyRoutes);
+app.use('/api/analyze-water', analyzeRoutes);
 
 // ── Health Check ───────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {
