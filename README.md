@@ -1,70 +1,98 @@
-# SWAAS: Safe Water Assessment & Awareness System
+# SWAAS
 
-SWAAS is a full-stack Android application designed to map and monitor local water safety. It collects water quality data through authorized contributors, runs the data through a rule-based safety engine utilizing WHO standards, and maps the results globally using OpenStreetMap.
+SWAAS is a full-stack Android app for tracking and visualizing water safety data. Contributors can submit field measurements, the app scores each source with a safety engine, and the results are shown on an OpenStreetMap-based map.
 
-## Overview
+## What It Does
 
-The goal of this project is to provide a reliable, offline-capable tool for tracking water safety in both urban and rural environments.
+- Maps water bodies and their safety status.
+- Scores samples using pH, turbidity, TDS, and contaminants.
+- Supports role-based access for users and contributors.
+- Works with cached data for offline-friendly browsing.
+- Uses OSMdroid, so there is no paid map API dependency.
 
-- **Offline Support**: Uses Android Room Database to cache map tiles and water body data for offline use.
-- **Water Safety Engine**: Analyzes water based on pH, Turbidity, TDS, and Contaminants, scoring it as Safe, Moderate, or Unsafe.
-- **Free Map Infrastructure**: Built on top of OSMdroid, requiring no paid Google Maps API keys.
-- **Authentication**: Firebase Authentication with role-based access control (General Users vs. Contributors).
+## Project Structure
+
+- `android/` - Android client written in Java.
+- `backend/` - Node.js/Express API with Firebase Admin integration.
 
 ## Tech Stack
 
-### Android Client
-- **Language**: Java 8
-- **UI Architecture**: MVVM, Material Design 3, ViewBinding
-- **Networking/Data**: Retrofit2, OkHttp3, Room Persistence Library
-- **Maps**: OSMdroid
+- Android: Java, MVVM, ViewBinding, Room, Retrofit, OkHttp, OSMdroid
+- Backend: Node.js, Express, Firebase Firestore, Firebase Admin SDK
 
-### Backend Service
-- **Environment**: Node.js / Express.js
-- **Database**: Firebase Firestore
-- **Security**: Firebase Admin SDK, JWT validation
+## Prerequisites
 
-## Getting Started
+- Android Studio with Android SDK installed
+- Node.js 18 or newer
+- A Firebase project with Authentication and Firestore enabled
 
-### 1. Set up Firebase
-1. Create a new project in the [Firebase Console](https://console.firebase.google.com).
-2. Enable **Email/Password Authentication**.
-3. Create a **Firestore Database** and start it in Test Mode.
-4. Download your `google-services.json` and place it in the `android/app/` folder.
-5. Generate a private Service Account Key and save it as `serviceAccountKey.json` inside the `backend/` folder.
+## Firebase Setup
 
-### 2. Run the Node.js Backend
-From the root of the project:
+1. Create a Firebase project in the [Firebase Console](https://console.firebase.google.com).
+2. Enable Email/Password Authentication.
+3. Create a Firestore database.
+4. Download `google-services.json` into `android/app/`.
+5. Provide backend credentials as either:
+	- `backend/serviceAccountKey.json`, or
+	- `FIREBASE_SERVICE_ACCOUNT_JSON` in the environment.
+
+## Run The Backend
+
+From the repository root:
+
 ```bash
 cd backend
 npm install
 npm run dev
 ```
 
-### 3. Run the Android App
-1. Open up **Android Studio**.
-2. Select **File > Open** and choose the `Swaas/android` directory.
-3. Wait for the Gradle project sync to finish.
-4. Run the app on an Android Emulator or your physical device.
+The API runs on `http://localhost:3000` by default.
 
-## API Documentation
+## Run The Android App
 
-| Method | Endpoint | Authorization | Description |
-|--------|----------|---------------|-------------|
-| POST   | `/api/auth/register` | Open | Create a customized user account |
-| POST   | `/api/auth/login` | Open | Issue authentication token |
-| GET    | `/api/waterbodies` | User | Get a full list of logged water bodies |
-| GET    | `/api/waterbodies/nearby` | User | Fetch water bodies within a given radius |
-| POST   | `/api/waterbodies` | Contributor | Upload new water tests |
-| PUT    | `/api/waterbodies/:id` | Contributor | Update existing water tests |
+1. Open the `android/` folder in Android Studio.
+2. Let Gradle sync finish.
+3. Run on an emulator or a connected Android phone.
 
-## Safety Engine Logic
+To build a debug APK from the command line:
 
-The backend and frontend share a mirrored logic engine that determines safety. It relies on the following checks based loosely on standard WHO metrics:
+```bash
+cd android
+gradlew.bat assembleDebug
+```
 
-- **pH Level** (Ideal: 6.5 - 8.5)
-- **Turbidity** (Ideal: < 5.0 NTU)
-- **TDS** (Ideal: < 500 mg/L)
-- **Contaminants** (Must not contain toxins like Lead, Arsenic)
+The APK is generated at `android/app/build/outputs/apk/debug/app-debug.apk`.
 
-A score above 80 is marked as safe, 50-79 is moderate, and below 50 is strictly unsafe.
+## API Endpoints
+
+| Method | Endpoint | Access | Purpose |
+|---|---|---|---|
+| POST | `/api/auth/register` | Open | Create a user account |
+| POST | `/api/auth/login` | Open | Verify a Firebase ID token |
+| GET | `/api/auth/profile` | Authenticated | Fetch the current profile |
+| GET | `/api/waterbodies` | Authenticated | List all water bodies |
+| GET | `/api/waterbodies/nearby` | Authenticated | Find nearby water bodies |
+| GET | `/api/waterbodies/search` | Authenticated | Search water bodies by name |
+| POST | `/api/waterbodies` | Contributor | Add a new water body |
+| PUT | `/api/waterbodies/:id` | Contributor | Update a water body |
+| DELETE | `/api/waterbodies/:id` | Contributor | Remove a water body |
+
+## Safety Scoring
+
+The app uses a deterministic scoring model based on these checks:
+
+- pH: ideal range 6.5 to 8.5
+- Turbidity: lower values are safer, with 5 NTU as the upper target
+- TDS: lower values are safer, with 500 mg/L as the main threshold
+- Contaminants: flags harmful substances such as lead, arsenic, mercury, and bacteria
+
+Scores are classified as:
+
+- 80 and above: Safe
+- 50 to 79: Moderate
+- Below 50: Unsafe
+
+## Notes
+
+- `android/local.properties` is machine-specific and should not be committed.
+- If Firebase credentials are missing, the backend still starts, but Firestore/Auth operations will fail until credentials are provided.
