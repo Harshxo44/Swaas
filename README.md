@@ -33,8 +33,8 @@ SWAAS is a full-stack Android app for tracking and visualizing water safety data
 3. Create a Firestore database.
 4. Download `google-services.json` into `android/app/`.
 5. Provide backend credentials as either:
-	- `backend/serviceAccountKey.json`, or
-	- `FIREBASE_SERVICE_ACCOUNT_JSON` in the environment.
+   - `backend/serviceAccountKey.json`, or
+   - `FIREBASE_SERVICE_ACCOUNT_JSON` in the environment.
 
 ## Run The Backend
 
@@ -65,17 +65,17 @@ The APK is generated at `android/app/build/outputs/apk/debug/app-debug.apk`.
 
 ## API Endpoints
 
-| Method | Endpoint | Access | Purpose |
-|---|---|---|---|
-| POST | `/api/auth/register` | Open | Create a user account |
-| POST | `/api/auth/login` | Open | Verify a Firebase ID token |
-| GET | `/api/auth/profile` | Authenticated | Fetch the current profile |
-| GET | `/api/waterbodies` | Authenticated | List all water bodies |
-| GET | `/api/waterbodies/nearby` | Authenticated | Find nearby water bodies |
-| GET | `/api/waterbodies/search` | Authenticated | Search water bodies by name |
-| POST | `/api/waterbodies` | Contributor | Add a new water body |
-| PUT | `/api/waterbodies/:id` | Contributor | Update a water body |
-| DELETE | `/api/waterbodies/:id` | Contributor | Remove a water body |
+| Method | Endpoint                  | Access        | Purpose                     |
+| ------ | ------------------------- | ------------- | --------------------------- |
+| POST   | `/api/auth/register`      | Open          | Create a user account       |
+| POST   | `/api/auth/login`         | Open          | Verify a Firebase ID token  |
+| GET    | `/api/auth/profile`       | Authenticated | Fetch the current profile   |
+| GET    | `/api/waterbodies`        | Authenticated | List all water bodies       |
+| GET    | `/api/waterbodies/nearby` | Authenticated | Find nearby water bodies    |
+| GET    | `/api/waterbodies/search` | Authenticated | Search water bodies by name |
+| POST   | `/api/waterbodies`        | Contributor   | Add a new water body        |
+| PUT    | `/api/waterbodies/:id`    | Contributor   | Update a water body         |
+| DELETE | `/api/waterbodies/:id`    | Contributor   | Remove a water body         |
 
 ## Safety Scoring
 
